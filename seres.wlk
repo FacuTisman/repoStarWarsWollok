@@ -1,8 +1,6 @@
 import planetas.*
 
 class Defensores{
-    var  potencia = 0 
-    
     method potencia()
 }
 
@@ -12,11 +10,7 @@ object arturito inherits Defensores{
     const valentia = 10 // puede cambiar?
     var bateria = 50 
 
-    override method potencia(){
-        potencia = valentia * bateria
-        return potencia 
-    }
-
+    override method potencia() = valentia * bateria
 }
 
 class Armas{
@@ -41,26 +35,25 @@ object hanSolo inherits Defensores{
     }
 
     override method potencia() {
-        if(congelado){
-            return potencia
-        }
-        else{
-            potencia = arma.energia() * 2
-            return potencia
-        }
-    }
 
+        var potenciaActual 
+
+        if(!congelado){
+            potenciaActual = arma.energia() * 2
+        }
+        
+        return potenciaActual 
+}
 }
 
 class Lider inherits Defensores{
-    method potenciaPlaneta(planeta){
-        planeta.guerreros().forEach({guerrero => guerrero.potencia(guerrero.potencia() + 1)})
-    }
+    
+    var planetaDefendido 
 
-    override method potencia() = potencia
+    override method potencia() = planetaDefendido.guerreros().sum({guerrero => guerrero.potencia()})
 }
 
-const leia = new Lider()
+const leia = new Lider(planetaDefendido = tatooine)
 
 class Maestro inherits Defensores{
     const midiclorianos = 100000
@@ -72,8 +65,8 @@ class Maestro inherits Defensores{
     var property rol = jedi 
     
 
-    method viveSuceso(suceso, parametro){ // esta bien asi?
-        esperanza += suceso.cargaEmocional(parametro)
+    method viveSuceso(suceso){ // esta bien asi?
+        esperanza += suceso.cargaEmocional()
 
         if (esperanza <= 0){
             rol = sith
@@ -83,7 +76,7 @@ class Maestro inherits Defensores{
         }
     }
 
-    override method potencia() = (midiclorianos + cargaDeSable) * rol.fuerza()
+    override method potencia() = (midiclorianos/1000 + cargaDeSable) * rol.fuerza()
     
 }
 
@@ -99,17 +92,30 @@ object sith{
 }
 
 class Suceso {
-    method cargaEmocional(parametro)
+    
+    method cargaEmocional()
 }
 
 object conseguirAmigo inherits Suceso{  // se repite logica?
-    override method cargaEmocional(amigo) = amigo.potencia()
+    var amigo = arturito
+    override method cargaEmocional() = amigo.potencia()
 }
 
 object participarEnBatalla inherits Suceso{
-    override method cargaEmocional(bajas) = bajas * (-2)
+    var bajas = 20
+    override method cargaEmocional() = bajas * (-2)
 }
 
 object ganarCarrera inherits Suceso{
-    override method cargaEmocional(unidades) = 5 //que hago con ese parametro?
+    
+    override method cargaEmocional() = 5 //que hago con ese parametro?
+}
+
+class SucesoMultiple inherits Suceso{
+
+    const sucesos = []
+
+    override method cargaEmocional() = 
+    sucesos.sum({suceso => suceso.cargaEmocional()})
+    
 }
