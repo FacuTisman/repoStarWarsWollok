@@ -58,9 +58,8 @@ const leia = new Lider(planetaDefendido = tatooine)
 class Maestro inherits Defensores{
     const midiclorianos = 100000
     const cargaDeSable = 100
-    var esperanza = 50
+    var property esperanza = 50
 
-    method esperanza() = esperanza
 
     var property rol = jedi 
     
@@ -96,19 +95,19 @@ class Suceso {
     method cargaEmocional()
 }
 
-object conseguirAmigo inherits Suceso{  // se repite logica?
-    var amigo = arturito
+class ConseguirAmigo inherits Suceso{  // se repite logica?
+    var amigo 
     override method cargaEmocional() = amigo.potencia()
 }
 
-object participarEnBatalla inherits Suceso{
+class ParticiparEnBatalla inherits Suceso{
     var bajas = 20
     override method cargaEmocional() = bajas * (-2)
 }
 
-object ganarCarrera inherits Suceso{
+class GanarCarrera inherits Suceso{
     
-    override method cargaEmocional() = 5 //que hago con ese parametro?
+    override method cargaEmocional() = 5 
 }
 
 class SucesoMultiple inherits Suceso{

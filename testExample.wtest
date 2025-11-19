@@ -1,9 +1,12 @@
+import seres.*
 import example.pepita
 
-describe "group of tests for pepita" {
+describe "group of tests for starWars" {
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  test "yoda pierde esperanza" {
+    const amigoArturo = new ConseguirAmigo( amigo = arturito)
+    yoda.viveSuceso(amigoArturo)
+    assert.equals(yoda.esperanza(),550)
   }
 
 }
